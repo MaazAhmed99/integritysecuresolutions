@@ -1,21 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette — deep midnight navy with a gold signal accent. */
-  --color-ink-950: #05080f;
-  --color-ink-900: #080d18;
-  --color-ink-800: #0c1424;
-  --color-ink-700: #131d33;
-  --color-ink-600: #1c2942;
-  --color-ink-500: #2b3a56;
+  /* Brand palette — corporate navy with a red signal accent, in the vein of
+     the large UK security groups. Change these six values to re-skin the
+     entire site; nothing else hardcodes a brand colour. */
+  --color-ink-950: #04101f;
+  --color-ink-900: #071a30;
+  --color-ink-800: #0b2444;
+  --color-ink-700: #113059;
+  --color-ink-600: #1a4176;
+  --color-ink-500: #2a5896;
 
-  --color-gold-500: #f5b301;
-  --color-gold-400: #ffc42e;
-  --color-gold-600: #d29500;
+  --color-brand-500: #e4002b;
+  --color-brand-400: #ff2b4e;
+  --color-brand-600: #b30021;
 
-  --color-sand-50: #fbfaf7;
-  --color-sand-100: #f4f2ec;
-  --color-sand-200: #e6e2d8;
+  /* Neutral greys — cooler than the previous sand tones to sit with navy. */
+  --color-sand-50: #f8fafc;
+  --color-sand-100: #eef2f7;
+  --color-sand-200: #dde4ed;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif, sans-serif;
@@ -64,13 +67,13 @@
 
   /* Visible, consistent focus treatment across the whole site. */
   :focus-visible {
-    outline: 2px solid var(--color-gold-500);
+    outline: 2px solid var(--color-brand-500);
     outline-offset: 3px;
     border-radius: 2px;
   }
 
   ::selection {
-    background-color: var(--color-gold-500);
+    background-color: var(--color-brand-500);
     color: var(--color-ink-950);
   }
 }
@@ -133,6 +136,18 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* Entrance for hero slide copy when the active slide changes. */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

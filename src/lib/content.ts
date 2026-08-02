@@ -149,12 +149,12 @@ export const faqs: Faq[] = [
   {
     question: "How quickly can you put officers on site?",
     answer:
-      "For most requirements in London and the surrounding counties we can cover a site within 24 hours, and often the same day for urgent situations such as a break-in or a sudden vacancy. Call our team and we will tell you honestly what we can do.",
+      `For most requirements in ${site.serviceArea.city} and ${site.serviceArea.region} we can cover a site within 24 hours, and often the same day for urgent situations such as a break-in or a sudden vacancy. Call our team and we will tell you honestly what we can do.`,
   },
   {
     question: "Which areas do you cover?",
     answer:
-      "We are based in Harrow and cover Greater London and the Home Counties as standard, with national coverage available for multi-site contracts and events. Tell us where the site is and we will confirm before quoting.",
+      `We are based in ${site.serviceArea.city} and cover ${site.serviceArea.region} as standard, with national coverage available for multi-site contracts and events. Tell us where the site is and we will confirm before quoting.`,
   },
   {
     question: "Do you provide short-term and one-off cover?",

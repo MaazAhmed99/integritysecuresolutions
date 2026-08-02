@@ -18,12 +18,15 @@ export function EnquiryForm({
   submitLabel,
   successTitle,
   successBody,
+  consent,
   children,
 }: {
-  kind: "quote" | "contact" | "careers";
+  kind: "quote" | "contact" | "careers" | "interest";
   submitLabel: string;
   successTitle: string;
   successBody: string;
+  /** Replaces the default privacy line under the submit button. */
+  consent?: string;
   children: ReactNode;
 }) {
   const [status, setStatus] = useState<Status>("idle");
@@ -34,7 +37,17 @@ export function EnquiryForm({
     setStatus("sending");
     setError(null);
 
-    const data = Object.fromEntries(new FormData(event.currentTarget).entries());
+    // Collapse repeated keys (checkbox groups) into one comma-separated value,
+    // which Object.fromEntries would otherwise silently discard.
+    const formData = new FormData(event.currentTarget);
+    const data: Record<string, string> = {};
+    for (const key of new Set(formData.keys())) {
+      data[key] = formData
+        .getAll(key)
+        .map((value) => String(value).trim())
+        .filter(Boolean)
+        .join(", ");
+    }
 
     try {
       const response = await fetch("/api/enquiry", {
@@ -62,9 +75,9 @@ export function EnquiryForm({
     return (
       <div
         role="status"
-        className="rounded-card border border-gold-500/40 bg-white p-8 text-center shadow-lift"
+        className="rounded-card border border-brand-500/40 bg-white p-8 text-center shadow-lift"
       >
-        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-gold-500/15 text-gold-600">
+        <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-500/15 text-brand-600">
           <Icon name="check" className="size-7" strokeWidth={2.4} />
         </span>
         <h3 className="mt-5 text-xl font-bold text-ink-900">{successTitle}</h3>
@@ -72,7 +85,7 @@ export function EnquiryForm({
           {successBody}
         </p>
         <a href={site.phoneHref} className={buttonClass({ variant: "outline", className: "mt-6" })}>
-          <Icon name="phone" className="size-4 text-gold-600" />
+          <Icon name="phone" className="size-4 text-brand-600" />
           Or call {site.phone}
         </a>
       </div>
@@ -100,9 +113,13 @@ export function EnquiryForm({
       ) : null}
 
       <div className="mt-7 flex flex-col gap-4 border-t border-ink-900/8 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-relaxed text-ink-900/50">
-          We use your details only to respond to this enquiry. Fields marked{" "}
-          <span className="text-gold-600">*</span> are required.
+        <p className="max-w-xl text-xs leading-relaxed text-ink-900/50">
+          {consent ?? (
+            <>
+              We use your details only to respond to this enquiry. Fields marked{" "}
+              <span className="text-brand-600">*</span> are required.
+            </>
+          )}
         </p>
         <button
           type="submit"

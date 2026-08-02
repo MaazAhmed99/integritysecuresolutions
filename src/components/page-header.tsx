@@ -29,26 +29,33 @@ export function PageHeader({
         fill
         priority
         sizes="100vw"
-        className="object-cover opacity-30"
+        className="object-cover opacity-60"
       />
+      {/* Horizontal scrim: heaviest behind the copy on the left, clearing to
+          the right so the photograph is actually legible. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/90 to-ink-950/55"
+        className="absolute inset-0 bg-gradient-to-r from-ink-950/95 via-ink-950/75 to-ink-950/30"
       />
-      <div aria-hidden className="grid-texture absolute inset-0 opacity-50" />
+      {/* Grounds the bottom edge so the banner meets the next section cleanly. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent"
+      />
+      <div aria-hidden className="grid-texture absolute inset-0 opacity-25" />
 
       <div className="container-page relative py-16 sm:py-20 lg:py-24">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-2 text-xs text-white/45">
             <li>
-              <Link href="/" className="transition-colors hover:text-gold-400">
+              <Link href="/" className="transition-colors hover:text-brand-400">
                 Home
               </Link>
             </li>
             {breadcrumbs.map((crumb) => (
               <li key={crumb.href} className="flex items-center gap-2">
                 <Icon name="arrow" className="size-3 opacity-50" />
-                <Link href={crumb.href} className="transition-colors hover:text-gold-400">
+                <Link href={crumb.href} className="transition-colors hover:text-brand-400">
                   {crumb.label}
                 </Link>
               </li>

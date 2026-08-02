@@ -8,16 +8,36 @@ import { Icon } from "@/components/icons";
 import { CheckItem, Pill, SectionHeading, buttonClass } from "@/components/ui";
 import { CtaBand } from "@/components/sections/cta-band";
 import { getService, services } from "@/lib/services";
+import { getPillar, pillars } from "@/lib/pillars";
+import { PillarDetail } from "@/components/pillar-detail";
 import { site } from "@/lib/site";
 
 type Params = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return services.map((service) => ({ slug: service.slug }));
+  return [
+    ...pillars.map((pillar) => ({ slug: pillar.slug })),
+    ...services.map((service) => ({ slug: service.slug })),
+  ];
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
+
+  const pillar = getPillar(slug);
+  if (pillar) {
+    return {
+      title: pillar.title,
+      description: pillar.summary,
+      alternates: { canonical: `/services/${pillar.slug}` },
+      openGraph: {
+        title: `${pillar.title} | ${site.name}`,
+        description: pillar.summary,
+        images: [{ url: pillar.image.src }],
+      },
+    };
+  }
+
   const service = getService(slug);
   if (!service) return {};
 
@@ -35,6 +55,29 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ServiceDetailPage({ params }: Params) {
   const { slug } = await params;
+
+  // Pillars and individual services share this route so every /services/*
+  // URL stays flat and stable.
+  const pillar = getPillar(slug);
+  if (pillar) {
+    return (
+      <>
+        <PageHeader
+          eyebrow="Our services"
+          title={pillar.title}
+          description={pillar.summary}
+          image={pillar.image}
+          breadcrumbs={[{ href: "/services", label: "Services" }]}
+        />
+        <PillarDetail pillar={pillar} />
+        <CtaBand
+          title={`Talk to us about ${pillar.title.toLowerCase()}`}
+          body="Free site survey, itemised quote and no minimum contract length. Call us or send the details and we will come straight back to you."
+        />
+      </>
+    );
+  }
+
   const service = getService(slug);
   if (!service) notFound();
 
@@ -134,7 +177,9 @@ export default async function ServiceDetailPage({ params }: Params) {
                     <Icon name="pin" className="mt-0.5 size-4 shrink-0 text-gold-600" />
                     <div>
                       <dt className="font-semibold text-ink-900">Coverage</dt>
-                      <dd className="text-ink-900/60">London, Home Counties & nationwide</dd>
+                      <dd className="text-ink-900/60">
+                        {site.serviceArea.short} & nationwide
+                      </dd>
                     </div>
                   </div>
                 </dl>

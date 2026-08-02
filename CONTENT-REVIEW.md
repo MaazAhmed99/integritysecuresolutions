@@ -4,29 +4,26 @@ The site is branded **Integrity Secure Solutions**. It was built using
 sentrixsecurityltd.com as a structural reference, and some of that company's real
 business data came across as scaffolding. **Read section 0 before showing this to anyone.**
 
-## 0. ⚠️ Another company's details are still in the build
+## 0. Contact details — status
 
-Sentrix Security Ltd is a real, unrelated business. Publishing their contact details or
-client feedback under the Integrity Secure Solutions name would be misrepresentation, and
-the phone number would send your enquiries to a competitor.
-
-Replace all of the following in `src/lib/site.ts`:
+All values live in `src/lib/site.ts`.
 
 | Field | Current value | Status |
 |---|---|---|
-| `phone` / `phoneHref` | 0330 127 3799 | **Sentrix's real number — must change** |
-| `address` | Unit 2, Bradstowe House, Junction Road, Harrow, HA1 1NL | **Sentrix's real address — must change** |
-| `email` | info@integritysecuresolutions.co.uk | Invented placeholder — set your real address |
-| `url` | https://integritysecuresolutions.co.uk | Invented placeholder — set your real domain |
+| `phone` / `phoneHref` | +447438082841 / `tel:+447438082841` | ✅ Real — client supplied |
+| `address` | 797-801 Stratford Road, Birmingham, West Midlands B11 4DA | ✅ Real — client supplied |
+| `serviceArea` | Birmingham & the West Midlands | ⚠️ Assumed from the postcode — confirm actual radius |
+| `email` | info@integritysecuresolutions.co.uk | ❌ Invented placeholder — set the real inbox |
+| `url` | https://integritysecuresolutions.co.uk | ❌ Invented placeholder — set the real domain |
 
-The address also drives the Google Map embed on `/contact` and the `SecurityService`
-JSON-LD in `src/app/layout.tsx`, both of which read from `site.ts` automatically.
+The address drives the Google Map embed on `/contact` and the `SecurityService` JSON-LD in
+`src/app/layout.tsx` automatically. `serviceArea` drives every mention of the operating
+area in headings, meta descriptions, the About page and the FAQs.
 
-The three testimonials in `src/lib/content.ts` are Sentrix's client quotes with the company
-name swapped. **Replace them with your own, or delete the `TestimonialsSection` from
-`src/app/page.tsx`, `/about` and `/sectors`.**
-
-The FAQ answer about coverage says "based in Harrow" — update once your address is set.
+**Still outstanding:** the three testimonials in `src/lib/content.ts` are another company's
+client quotes with the name swapped. **Replace them with genuine Integrity Secure Solutions
+feedback, or delete the `TestimonialsSection` from `src/app/page.tsx`, `/about` and
+`/sectors`.**
 
 ## 1. Claims that need client sign-off
 
@@ -42,7 +39,7 @@ These are standard for a UK security company and are almost certainly true, but 
 | "Most sites covered within 24 hours" | Service page sidebars, FAQ | Confirm this is realistic |
 | "No minimum contract length" | About, CTA copy, FAQ | Confirm commercially |
 | "Free site survey" / "no obligation" | Multiple CTAs and the quote page | Confirm |
-| Coverage: "Greater London and the Home Counties as standard, national for multi-site" | About page, FAQ | Confirm actual operating radius |
+| Coverage: "the West Midlands as standard, national for multi-site" | `site.serviceArea`, used by About page and FAQ | Confirm actual operating radius |
 | Named account manager on every contract | About page, `src/lib/content.ts` | Confirm |
 | NFC checkpoint scanning / online patrol portal | `src/lib/services.ts` → `mobile-patrol-security` | Confirm the technology is actually used |
 | Redeployable CCTV towers | `src/lib/services.ts` → `cctv-monitoring` | Confirm this is offered |
@@ -66,8 +63,9 @@ Replace them with the client's real figures, or delete the `StatsBand` section f
 
 ## 3. Contact details
 
-Covered in section 0 — all of them need replacing. Note that `phoneHref` is a separate
-field (`tel:+44...`), so update both when you change the number.
+Covered in section 0. Phone and address are done; email and domain still need setting.
+Note that `phoneHref` is a separate field (`tel:+44...`), so update both if the number
+ever changes.
 
 ## 4. Testimonials
 

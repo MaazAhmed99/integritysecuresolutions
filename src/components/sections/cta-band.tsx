@@ -12,7 +12,7 @@ export function CtaBand({
   body?: string;
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-gold-500">
+    <section className="relative isolate overflow-hidden bg-brand-500">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.07]"
@@ -24,10 +24,10 @@ export function CtaBand({
 
       <div className="container-page relative flex flex-col items-start gap-8 py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20">
         <Reveal className="max-w-2xl">
-          <h2 className="text-3xl font-extrabold leading-tight text-ink-950 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl">
             {title}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-ink-950/75">{body}</p>
+          <p className="mt-4 text-base leading-relaxed text-white/85">{body}</p>
         </Reveal>
 
         <Reveal delay={120} className="w-full shrink-0 lg:w-auto">
@@ -38,7 +38,7 @@ export function CtaBand({
             </Link>
             <a
               href={site.phoneHref}
-              className={buttonClass({ variant: "onGold", size: "lg" })}
+              className={buttonClass({ variant: "onAccent", size: "lg" })}
             >
               <Icon name="phone" className="size-4" />
               {site.phone}

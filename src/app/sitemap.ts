@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/lib/services";
+import { pillars } from "@/lib/pillars";
 import { site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,7 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/about", priority: 0.7 },
     { path: "/quote", priority: 0.9 },
     { path: "/contact", priority: 0.8 },
-    { path: "/careers", priority: 0.6 },
   ];
 
   return [
@@ -21,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: route.priority,
+    })),
+    ...pillars.map((pillar) => ({
+      url: `${site.url}/services/${pillar.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     })),
     ...services.map((service) => ({
       url: `${site.url}/services/${service.slug}`,

@@ -21,35 +21,35 @@ export function Hero() {
         fill
         priority
         sizes="100vw"
-        className="object-cover object-center opacity-45"
+        className="object-cover object-center opacity-65"
       />
       {/* Two-stop scrim: keeps the left-hand copy legible on every crop. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/85 to-ink-950/40"
+        className="absolute inset-0 bg-gradient-to-r from-ink-950/95 via-ink-950/72 to-ink-950/25"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-ink-950/60"
+        className="absolute inset-0 bg-gradient-to-t from-ink-950/85 via-transparent to-ink-950/45"
       />
-      <div aria-hidden className="grid-texture absolute inset-0 opacity-60" />
+      <div aria-hidden className="grid-texture absolute inset-0 opacity-30" />
 
       <div className="container-page relative py-20 sm:py-28 lg:py-36">
         <div className="max-w-3xl">
           <Reveal>
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-gold-500/30 bg-gold-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-gold-400">
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-400">
               <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-gold-400 opacity-70" />
-                <span className="relative inline-flex size-2 rounded-full bg-gold-500" />
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-brand-400 opacity-70" />
+                <span className="relative inline-flex size-2 rounded-full bg-brand-500" />
               </span>
-              Operating across London &amp; the UK
+              Operating across {site.serviceArea.short}
             </span>
           </Reveal>
 
           <Reveal delay={80}>
             <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
               Professional security services
-              <span className="block text-gold-500">you can actually trust.</span>
+              <span className="block text-brand-400">you can actually trust.</span>
             </h1>
           </Reveal>
 
@@ -71,7 +71,7 @@ export function Hero() {
                 href={site.phoneHref}
                 className={buttonClass({ variant: "ghostLight", size: "lg" })}
               >
-                <Icon name="phone" className="size-4 text-gold-500" />
+                <Icon name="phone" className="size-4 text-brand-400" />
                 {site.phone}
               </a>
             </div>
@@ -81,7 +81,7 @@ export function Hero() {
             <ul className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-8">
               {trustPoints.map((point) => (
                 <li key={point.label} className="flex items-center gap-2.5 text-sm text-white/75">
-                  <Icon name={point.icon} className="size-4.5 text-gold-500" />
+                  <Icon name={point.icon} className="size-4.5 text-brand-400" />
                   {point.label}
                 </li>
               ))}

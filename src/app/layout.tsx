@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [
-    "security company London",
+    "security company Birmingham",
     "SIA licensed security guards",
     "static security guards",
     "dog handling security",
@@ -34,7 +34,8 @@ export const metadata: Metadata = {
     "CCTV monitoring",
     "event security",
     "key holding and alarm response",
-    "construction site security Harrow",
+    "construction site security Birmingham",
+    "security services West Midlands",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -69,7 +70,7 @@ const organisationSchema = {
   description: site.description,
   address: {
     "@type": "PostalAddress",
-    streetAddress: `${site.address.line1}, ${site.address.line2}`,
+    streetAddress: site.address.line1,
     addressLocality: site.address.city,
     addressRegion: site.address.region,
     postalCode: site.address.postcode,
@@ -107,7 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-sans antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-full focus:bg-gold-500 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-ink-950"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-full focus:bg-brand-500 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-ink-950"
         >
           Skip to main content
         </a>

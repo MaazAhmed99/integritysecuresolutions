@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/sections/hero";
-import { ServicesSection } from "@/components/sections/services-section";
-import { StatsBand } from "@/components/sections/stats-band";
-import { AboutSection } from "@/components/sections/about-section";
-import { WhyChoose } from "@/components/sections/why-choose";
-import { ProcessSection } from "@/components/sections/process-section";
-import { SectorsSection } from "@/components/sections/sectors-section";
+import { HeroSlider } from "@/components/sections/hero-slider";
+import { PillarsSection } from "@/components/sections/pillars-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
-import { FaqSection } from "@/components/sections/faq-section";
-import { CtaBand } from "@/components/sections/cta-band";
+import { ContactSection } from "@/components/sections/contact-section";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -17,19 +11,17 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+/**
+ * Four sections only. The stats band, about, why-choose, process, sectors
+ * and FAQ blocks still exist as components and are used on the inner pages.
+ */
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <ServicesSection />
-      <StatsBand />
-      <AboutSection />
-      <WhyChoose />
-      <ProcessSection />
-      <SectorsSection limit={3} />
+      <HeroSlider />
+      <PillarsSection />
       <TestimonialsSection />
-      <FaqSection />
-      <CtaBand />
+      <ContactSection />
     </>
   );
 }

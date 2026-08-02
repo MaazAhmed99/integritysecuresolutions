@@ -30,6 +30,7 @@ export type IconName =
   | "plus"
   | "badge"
   | "clipboard"
+  | "lock"
   | "eye";
 
 const paths: Record<IconName, React.ReactNode> = {
@@ -152,6 +153,13 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="M9 4.5V3.6A1.6 1.6 0 0 1 10.6 2h2.8A1.6 1.6 0 0 1 15 3.6v.9" />
       <path d="M9 11h6" />
       <path d="M9 15h4" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="4.5" y="10.5" width="15" height="10.5" rx="2.2" />
+      <path d="M8 10.5V7.6a4 4 0 0 1 8 0v2.9" />
+      <path d="M12 14.6v2.4" />
     </>
   ),
   eye: (

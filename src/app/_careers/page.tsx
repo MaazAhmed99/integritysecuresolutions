@@ -12,7 +12,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Careers — Apply for a Job",
   description:
-    `Apply to join ${site.legalName}. We recruit SIA licensed security officers, dog handlers, mobile patrol drivers and CCTV operators across London and the UK.`,
+    `Apply to join ${site.legalName}. We recruit SIA licensed security officers, dog handlers, mobile patrol drivers and CCTV operators across ${site.serviceArea.short} and the UK.`,
   alternates: { canonical: "/careers" },
 };
 
@@ -63,7 +63,7 @@ export default function CareersPage() {
               {benefits.map((benefit, index) => (
                 <Reveal key={benefit.title} delay={index * 80}>
                   <div className="rounded-card border border-ink-900/8 bg-sand-50 p-5">
-                    <span className="flex size-10 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                    <span className="flex size-10 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                       <Icon name={benefit.icon} className="size-5" />
                     </span>
                     <h3 className="mt-4 text-sm font-bold text-ink-900">{benefit.title}</h3>
@@ -116,7 +116,7 @@ export default function CareersPage() {
                   id="location"
                   label="Areas you can work"
                   className="sm:col-span-2"
-                  placeholder="e.g. Harrow, Wembley, Central London"
+                  placeholder="e.g. Birmingham, Solihull, Coventry"
                 />
                 <TextArea
                   id="experience"
@@ -130,7 +130,7 @@ export default function CareersPage() {
 
             <Reveal delay={180}>
               <p className="mt-6 flex items-start gap-2.5 text-xs leading-relaxed text-ink-900/55">
-                <Icon name="mail" className="mt-0.5 size-4 shrink-0 text-gold-600" />
+                <Icon name="mail" className="mt-0.5 size-4 shrink-0 text-brand-600" />
                 Prefer to send a CV? Email it to{" "}
                 <a
                   href={`mailto:${site.email}?subject=Job application`}

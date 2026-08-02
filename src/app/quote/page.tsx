@@ -100,7 +100,7 @@ export default function QuotePage() {
                 <ul className="mt-6 space-y-5">
                   {promises.map((promise) => (
                     <li key={promise.title} className="flex gap-3.5">
-                      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white/8 text-gold-500">
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white/8 text-brand-400">
                         <Icon name={promise.icon} className="size-4.5" />
                       </span>
                       <div>
@@ -115,7 +115,7 @@ export default function QuotePage() {
                   <p className="text-xs text-white/50">Prefer to talk it through?</p>
                   <a
                     href={site.phoneHref}
-                    className="mt-2 flex items-center gap-2.5 font-display text-xl font-bold text-gold-500 transition-colors hover:text-gold-400"
+                    className="mt-2 flex items-center gap-2.5 font-display text-xl font-bold text-brand-400 transition-colors hover:text-brand-400"
                   >
                     <Icon name="phone" className="size-5" />
                     {site.phone}

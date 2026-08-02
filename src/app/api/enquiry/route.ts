@@ -3,10 +3,15 @@ import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
 
-type EnquiryKind = "quote" | "contact" | "careers";
+type EnquiryKind = "quote" | "contact" | "careers" | "interest";
 
 const LABELS: Record<string, string> = {
   name: "Name",
+  title: "Title",
+  firstName: "First name",
+  lastName: "Last name",
+  city: "City or region",
+  services: "Services interested in",
   email: "Email",
   phone: "Phone",
   company: "Company",
@@ -24,12 +29,23 @@ const REQUIRED: Record<EnquiryKind, string[]> = {
   quote: ["name", "email", "phone", "service"],
   contact: ["name", "email", "message"],
   careers: ["name", "email", "phone", "role"],
+  interest: [
+    "title",
+    "firstName",
+    "lastName",
+    "city",
+    "email",
+    "phone",
+    "company",
+    "services",
+  ],
 };
 
 const SUBJECTS: Record<EnquiryKind, string> = {
   quote: "New quote request",
   contact: "New website enquiry",
   careers: "New job application",
+  interest: "New service enquiry",
 };
 
 const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
@@ -81,6 +97,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Please enter a valid email address." }, { status: 422 });
   }
 
+  // The interest form splits the name across two fields.
+  const senderName =
+    fields.name ?? [fields.firstName, fields.lastName].filter(Boolean).join(" ") ?? "Website";
+
   const rows = Object.entries(fields)
     .map(([key, value]) => `${LABELS[key] ?? key}: ${value}`)
     .join("\n");
@@ -107,7 +127,7 @@ export async function POST(request: Request) {
         from,
         to: [to],
         reply_to: fields.email,
-        subject: `${SUBJECTS[kind]} — ${fields.name}`,
+        subject: `${SUBJECTS[kind]} — ${senderName}`,
         html: `<h2>${SUBJECTS[kind]}</h2><table cellpadding="6">${Object.entries(fields)
           .map(
             ([key, value]) =>

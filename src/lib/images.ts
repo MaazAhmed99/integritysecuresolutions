@@ -13,17 +13,29 @@ export function unsplash(id: string, width = 1600) {
 }
 
 export const img = {
+  /**
+   * NOTE: stock "security" photography is a minefield. Free results are
+   * overwhelmingly police or military, usually non-UK — previous picks here
+   * showed soldiers at a checkpoint, Indonesian POLRI officers, and an officer
+   * in a peaked cap with foreign insignia. Nothing on Unsplash reliably reads
+   * as UK SIA-licensed private security.
+   *
+   * The hero and about images therefore use setting rather than uniform:
+   * a UK-plausible commercial scene carries the message without staking the
+   * brand on a stock officer whose kit is wrong. Replace all of these with
+   * photographs of the client's own officers as soon as they are available.
+   */
   heroGuards: {
-    src: unsplash("photo-1772375969898-fd359c74cb9b", 2000),
-    alt: "Security officers on duty at a controlled site entrance",
+    src: unsplash("photo-1778400513759-bc919bb69a6d", 2000),
+    alt: "A lone figure walking past modern commercial buildings at dusk",
   },
   aboutOfficer: {
-    src: unsplash("photo-1759366035053-4b172d9b299d", 1400),
-    alt: "Uniformed security officer in a high-visibility vest",
+    src: unsplash("photo-1592830408148-3737e9526ab9", 1400),
+    alt: "A commercial building lit at night",
   },
   staticGuarding: {
-    src: unsplash("photo-1770529933902-d2f7851be31c", 1400),
-    alt: "Two static security officers stationed in a commercial reception area",
+    src: unsplash("photo-1765510435009-99685cf5e412", 1400),
+    alt: "Uniformed security officer patrolling a venue interior",
   },
   dogHandling: {
     src: unsplash("photo-1628579606036-d2990d15a5ab", 1400),
@@ -64,6 +76,26 @@ export const img = {
   meeting: {
     src: unsplash("photo-1521791136064-7986c2920216", 1400),
     alt: "Two people shaking hands to confirm a security contract",
+  },
+  cyber: {
+    src: unsplash("photo-1558494949-ef010cbdcc31", 1400),
+    alt: "Racks of networking equipment inside a secure data centre",
+  },
+  endpoint: {
+    src: unsplash("photo-1614064641938-3bbee52942c7", 1400),
+    alt: "A red padlock resting on a laptop keyboard",
+  },
+  phishing: {
+    src: unsplash("photo-1614064548237-096f735f344f", 1400),
+    alt: "A padlock on a laptop with light trails behind it",
+  },
+  backup: {
+    src: unsplash("photo-1779896412104-0f589e7a4e94", 1400),
+    alt: "A hand inserting a USB drive into a laptop",
+  },
+  network: {
+    src: unsplash("photo-1680992046626-418f7e910589", 1400),
+    alt: "A rack of network equipment in a dimly lit server room",
   },
   cityNight: {
     src: unsplash("photo-1519608487953-e999c86e7455", 2000),

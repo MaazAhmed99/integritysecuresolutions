@@ -14,7 +14,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    `${site.legalName} is a ${site.address.city}-based security company providing SIA licensed guarding, dog handling, mobile patrols and CCTV monitoring across London and the UK.`,
+    `${site.legalName} is a ${site.address.city}-based security company providing SIA licensed guarding, dog handling, mobile patrols and CCTV monitoring across ${site.serviceArea.short} and the UK.`,
   alternates: { canonical: "/about" },
 };
 
@@ -72,8 +72,8 @@ export default function AboutPage() {
             <Reveal delay={120}>
               <div className="mt-7 space-y-4 text-base leading-relaxed text-ink-900/70">
                 <p>
-                  We operate from {site.address.city} and cover Greater London and
-                  the Home Counties as standard, with national coverage for
+                  We operate from {site.address.city} and cover{" "}
+                  {site.serviceArea.region} as standard, with national coverage for
                   multi-site contracts and events. Our officers work across
                   construction sites, warehouses, retail units, offices, venues and
                   managed residential estates.
@@ -116,7 +116,7 @@ export default function AboutPage() {
             {values.map((value, index) => (
               <Reveal key={value.title} delay={index * 90} className="h-full">
                 <div className="flex h-full flex-col rounded-card border border-ink-900/8 bg-white p-7 shadow-lift">
-                  <span className="flex size-12 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                  <span className="flex size-12 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                     <Icon name={value.icon} className="size-5.5" />
                   </span>
                   <h3 className="mt-6 text-lg font-bold text-ink-900">{value.title}</h3>

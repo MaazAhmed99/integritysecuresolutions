@@ -2,7 +2,7 @@ import type { ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "re
 import type { InputHTMLAttributes } from "react";
 
 const control =
-  "w-full rounded-xl border border-ink-900/15 bg-white px-4 py-3 text-sm text-ink-900 transition-colors placeholder:text-ink-900/35 hover:border-ink-900/30 focus:border-gold-500 focus:outline-none focus:ring-4 focus:ring-gold-500/15 disabled:opacity-60";
+  "w-full rounded-xl border border-ink-900/15 bg-white px-4 py-3 text-sm text-ink-900 transition-colors placeholder:text-ink-900/35 hover:border-ink-900/30 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/15 disabled:opacity-60";
 
 function Label({
   htmlFor,
@@ -17,7 +17,7 @@ function Label({
     <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-medium text-ink-900">
       {children}
       {required ? (
-        <span aria-hidden className="ml-0.5 text-gold-600">
+        <span aria-hidden className="ml-0.5 text-brand-600">
           *
         </span>
       ) : null}
@@ -94,6 +94,53 @@ export function Select({
         ))}
       </select>
     </div>
+  );
+}
+
+/**
+ * Multi-select rendered as checkboxes. All boxes share one `name`, so the
+ * submitted values arrive as a repeated key — EnquiryForm joins them.
+ */
+export function CheckboxGroup({
+  name,
+  legend,
+  options,
+  required,
+  className = "",
+}: {
+  name: string;
+  legend: string;
+  options: readonly string[];
+  required?: boolean;
+  className?: string;
+}) {
+  return (
+    <fieldset className={className}>
+      <legend className="mb-2.5 block text-sm font-medium text-ink-900">
+        {legend}
+        {required ? (
+          <span aria-hidden className="ml-0.5 text-brand-600">
+            *
+          </span>
+        ) : null}
+      </legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((option) => (
+          <label
+            key={option}
+            className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-ink-900/15 bg-white px-4 py-2 text-sm text-ink-900/80 transition-colors hover:border-ink-900/35 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-500/8 has-[:checked]:text-ink-900"
+          >
+            <input
+              type="checkbox"
+              name={name}
+              value={option}
+              className="size-4 accent-brand-500"
+            />
+            {option}
+          </label>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 

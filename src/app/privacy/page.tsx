@@ -53,7 +53,7 @@ export default function PrivacyPage() {
 
       <section className="section bg-white">
         <div className="container-page max-w-3xl">
-          <p className="rounded-card border border-gold-500/40 bg-gold-500/8 px-5 py-4 text-sm leading-relaxed text-ink-900/75">
+          <p className="rounded-card border border-brand-500/40 bg-brand-500/8 px-5 py-4 text-sm leading-relaxed text-ink-900/75">
             <strong className="font-semibold text-ink-900">Note for the site owner:</strong> this
             page is a template. Please have it reviewed and add your ICO registration
             number and specific retention periods before launch.

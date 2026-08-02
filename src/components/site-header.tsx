@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/logo";
 import { Icon } from "@/components/icons";
 import { buttonClass } from "@/components/ui";
-import { nav, site } from "@/lib/site";
+import { headerNav, site } from "@/lib/site";
 import { services } from "@/lib/services";
 
 export function SiteHeader() {
@@ -44,25 +44,25 @@ export function SiteHeader() {
     <>
       {/* Utility bar — phone and email are the two highest-intent actions
           for this business, so they stay visible above the nav on desktop. */}
-      <div className="hidden bg-ink-950 text-white/60 lg:block">
+      <div className="hidden border-b border-ink-900/8 bg-sand-100 text-ink-900/60 lg:block">
         <div className="container-page flex h-10 items-center justify-between text-xs">
           <p className="flex items-center gap-2">
-            <Icon name="clock" className="size-3.5 text-gold-500" />
+            <Icon name="clock" className="size-3.5 text-brand-500" />
             Mon–Fri 7am–7pm · Sat–Sun 10am–5pm · 24/7 emergency response
           </p>
           <div className="flex items-center gap-6">
             <a
               href={`mailto:${site.email}`}
-              className="flex items-center gap-2 transition-colors hover:text-white"
+              className="flex items-center gap-2 transition-colors hover:text-brand-600"
             >
-              <Icon name="mail" className="size-3.5 text-gold-500" />
+              <Icon name="mail" className="size-3.5 text-brand-500" />
               {site.email}
             </a>
             <a
               href={site.phoneHref}
-              className="flex items-center gap-2 font-semibold text-white/85 transition-colors hover:text-gold-400"
+              className="flex items-center gap-2 font-semibold text-ink-900 transition-colors hover:text-brand-600"
             >
-              <Icon name="phone" className="size-3.5 text-gold-500" />
+              <Icon name="phone" className="size-3.5 text-brand-500" />
               {site.phone}
             </a>
           </div>
@@ -70,32 +70,32 @@ export function SiteHeader() {
       </div>
 
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 border-b transition-all duration-300 ${
           scrolled
-            ? "border-b border-white/10 bg-ink-950/92 backdrop-blur-xl"
-            : "border-b border-white/5 bg-ink-950"
+            ? "border-ink-900/10 bg-white/92 shadow-lift backdrop-blur-xl"
+            : "border-ink-900/8 bg-white"
         }`}
       >
         <div className="container-page flex h-18 items-center justify-between gap-6 py-3.5">
-          <Logo />
+          <Logo tone="dark" />
 
           <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-            {nav.map((item) => (
+            {headerNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                className={`relative px-4 py-2 text-sm font-medium transition-colors ${
                   isActive(item.href)
-                    ? "text-white"
-                    : "text-white/65 hover:text-white"
+                    ? "text-brand-600"
+                    : "text-ink-900 hover:text-brand-600"
                 }`}
               >
                 {item.label}
                 {isActive(item.href) ? (
                   <span
                     aria-hidden
-                    className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-gold-500"
+                    className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-brand-500"
                   />
                 ) : null}
               </Link>
@@ -105,10 +105,10 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <a
               href={site.phoneHref}
-              className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-white lg:hidden"
+              className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-ink-900 transition-colors hover:text-brand-600 lg:hidden"
               aria-label={`Call ${site.phone}`}
             >
-              <Icon name="phone" className="size-4 text-gold-500" />
+              <Icon name="phone" className="size-4 text-brand-500" />
               <span className="hidden sm:inline">Call</span>
             </a>
 
@@ -123,7 +123,7 @@ export function SiteHeader() {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="flex size-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:bg-white/10 lg:hidden"
+              className="flex size-10 items-center justify-center rounded-full border border-ink-900/15 text-ink-900 transition-colors hover:border-brand-500 hover:text-brand-600 lg:hidden"
             >
               <Icon name={menuOpen ? "close" : "menu"} className="size-5" />
             </button>
@@ -146,25 +146,25 @@ export function SiteHeader() {
         />
         <nav
           aria-label="Mobile"
-          className="absolute inset-x-0 top-18 max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-white/10 bg-ink-900 px-5 pb-8 pt-4 shadow-lift-lg"
+          className="absolute inset-x-0 top-18 max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-ink-900/10 bg-white px-5 pb-8 pt-4 shadow-lift-lg"
         >
           <ul className="flex flex-col">
-            {nav.map((item) => (
+            {headerNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center justify-between border-b border-white/8 py-3.5 text-base font-medium ${
-                    isActive(item.href) ? "text-gold-400" : "text-white/85"
+                  className={`flex items-center justify-between border-b border-ink-900/8 py-3.5 text-base font-medium transition-colors hover:text-brand-600 ${
+                    isActive(item.href) ? "text-brand-600" : "text-ink-900"
                   }`}
                 >
                   {item.label}
-                  <Icon name="arrow" className="size-4 opacity-40" />
+                  <Icon name="arrow" className="size-4 opacity-30" />
                 </Link>
               </li>
             ))}
           </ul>
 
-          <p className="mt-6 mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/40">
+          <p className="mt-6 mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-ink-900/45">
             Our services
           </p>
           <ul className="grid gap-1">
@@ -172,9 +172,9 @@ export function SiteHeader() {
               <li key={service.slug}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-sm text-white/70 transition-colors hover:bg-white/5 hover:text-white"
+                  className="flex items-center gap-3 rounded-lg px-2 py-2.5 text-sm text-ink-900/70 transition-colors hover:bg-sand-100 hover:text-brand-600"
                 >
-                  <Icon name={service.icon} className="size-4 text-gold-500" />
+                  <Icon name={service.icon} className="size-4 text-brand-500" />
                   {service.title}
                 </Link>
               </li>
@@ -187,9 +187,9 @@ export function SiteHeader() {
             </Link>
             <a
               href={site.phoneHref}
-              className={buttonClass({ variant: "ghostLight", size: "lg" })}
+              className={buttonClass({ variant: "outline", size: "lg" })}
             >
-              <Icon name="phone" className="size-4" />
+              <Icon name="phone" className="size-4 text-brand-600" />
               {site.phone}
             </a>
           </div>

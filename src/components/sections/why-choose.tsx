@@ -66,7 +66,7 @@ export function WhyChoose() {
               delay={index * 60}
               className="flex items-start gap-4 bg-ink-950/85 p-5 backdrop-blur-sm transition-colors hover:bg-ink-900/85"
             >
-              <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-gold-500 text-ink-950">
+              <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-500 text-ink-950">
                 <Icon name="check" className="size-3.5" strokeWidth={3} />
               </span>
               <span className="text-sm leading-relaxed text-white/80">{reason}</span>

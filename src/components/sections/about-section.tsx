@@ -43,7 +43,7 @@ export function AboutSection() {
               the rigid two-column grid without misaligning the text column. */}
           <div className="absolute -bottom-6 left-4 right-4 rounded-card border border-ink-900/8 bg-white p-5 shadow-lift-lg sm:-right-6 sm:left-auto sm:bottom-8 sm:w-64">
             <div className="flex items-center gap-3">
-              <span className="flex size-11 items-center justify-center rounded-xl bg-gold-500/15 text-gold-600">
+              <span className="flex size-11 items-center justify-center rounded-xl bg-brand-500/15 text-brand-600">
                 <Icon name="shield" className="size-5.5" />
               </span>
               <div>
@@ -71,7 +71,7 @@ export function AboutSection() {
             {pillars.map((pillar, index) => (
               <Reveal key={pillar.title} delay={index * 90}>
                 <div className="flex gap-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                     <Icon name={pillar.icon} className="size-5" />
                   </span>
                   <div>
@@ -99,7 +99,7 @@ export function AboutSection() {
                 <Icon name="arrow" className="size-4" />
               </Link>
               <a href={site.phoneHref} className={buttonClass({ variant: "outline" })}>
-                <Icon name="phone" className="size-4 text-gold-600" />
+                <Icon name="phone" className="size-4 text-brand-600" />
                 {site.phone}
               </a>
             </div>

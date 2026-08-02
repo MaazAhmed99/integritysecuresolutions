@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      {
+        // Key holding and alarm response were split into two services.
+        source: "/services/key-holding-alarm-response",
+        destination: "/services/key-holding",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -10,15 +10,16 @@ const buttonBase =
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60";
 
 const buttonVariants = {
+  /* Red needs white text — the previous gold accent took dark text. */
   primary:
-    "bg-gold-500 text-ink-950 hover:bg-gold-400 shadow-[0_8px_24px_-10px_rgba(245,179,1,0.9)] hover:shadow-[0_12px_30px_-8px_rgba(245,179,1,0.75)]",
+    "bg-brand-500 text-white hover:bg-brand-600 shadow-[0_8px_24px_-10px_rgba(228,0,43,0.85)] hover:shadow-[0_12px_30px_-8px_rgba(228,0,43,0.7)]",
   dark: "bg-ink-900 text-white hover:bg-ink-700",
   outline:
     "border border-ink-900/20 bg-transparent text-ink-900 hover:border-ink-900/50 hover:bg-ink-900/5",
   ghostLight:
     "border border-white/25 bg-white/5 text-white backdrop-blur-sm hover:border-white/60 hover:bg-white/10",
-  /* For use on the gold CTA band, where a filled button would disappear. */
-  onGold: "border border-ink-950/25 text-ink-950 hover:bg-ink-950/10",
+  /* For use on the red CTA band, where a filled button would disappear. */
+  onAccent: "border border-white/45 text-white hover:bg-white/15",
 } as const;
 
 const buttonSizes = {
@@ -69,7 +70,7 @@ export function Eyebrow({
   return (
     <span
       className={`inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] ${
-        tone === "light" ? "text-gold-400" : "text-gold-600"
+        tone === "light" ? "text-brand-400" : "text-brand-600"
       }`}
     >
       <span aria-hidden className="h-px w-7 bg-current opacity-70" />
@@ -123,7 +124,7 @@ export function SectionHeading({
 export function Pill({ children, icon }: { children: ReactNode; icon?: IconName }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-ink-900/10 bg-white px-3 py-1.5 text-xs font-medium text-ink-900/75">
-      {icon ? <Icon name={icon} className="size-3.5 text-gold-600" /> : null}
+      {icon ? <Icon name={icon} className="size-3.5 text-brand-600" /> : null}
       {children}
     </span>
   );
@@ -132,7 +133,7 @@ export function Pill({ children, icon }: { children: ReactNode; icon?: IconName 
 export function CheckItem({ children }: { children: ReactNode }) {
   return (
     <li className="flex items-start gap-3">
-      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-gold-600">
+      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-brand-600">
         <Icon name="check" className="size-3" strokeWidth={2.6} />
       </span>
       <span className="text-sm leading-relaxed text-ink-900/75">{children}</span>

@@ -10,26 +10,33 @@ export const site = {
   shortName: "Integrity",
   tagline: "Professional Security Services You Can Trust",
   description:
-    "Integrity Secure Solutions provides SIA licensed static guarding, dog handling units, mobile patrols, CCTV monitoring, event security and key holding across London and the UK.",
+    "Integrity Secure Solutions provides SIA licensed static guarding, dog handling units, mobile patrols, CCTV monitoring, event security and key holding across Birmingham, the West Midlands and the UK.",
 
   /* TODO(client): PLACEHOLDER — replace with the real domain before launch,
      or set NEXT_PUBLIC_SITE_URL in .env.local. Drives canonicals and sitemap. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://integritysecuresolutions.co.uk",
 
-  /* TODO(client): PLACEHOLDER — the phone, email and address below were carried
-     over from the reference site and belong to a DIFFERENT company.
-     They must be replaced with Integrity Secure Solutions' own details. */
-  phone: "0330 127 3799",
-  phoneHref: "tel:+443301273799",
+  /** Displayed in UK national format; the href stays in +44 international form. */
+  phone: "+447438082841",
+  phoneHref: "tel:+447438082841",
+
+  /* TODO(client): PLACEHOLDER — replace with the real inbox before launch. */
   email: "info@integritysecuresolutions.co.uk",
 
   address: {
-    line1: "Unit 2, Bradstowe House",
-    line2: "Junction Road",
-    city: "Harrow",
-    region: "London",
-    postcode: "HA1 1NL",
+    line1: "797-801 Stratford Road",
+    city: "Birmingham",
+    region: "West Midlands",
+    postcode: "B11 4DA",
     country: "GB",
+  },
+
+  /** Coverage wording, referenced anywhere copy names the operating area. */
+  serviceArea: {
+    city: "Birmingham",
+    region: "the West Midlands",
+    /** Short form for headings and meta descriptions. */
+    short: "Birmingham & the West Midlands",
   },
 
   hours: [
@@ -51,19 +58,37 @@ export const site = {
   ],
 } as const;
 
+/** Address as one line, for the map query and JSON-LD. */
 export const formattedAddress = [
   site.address.line1,
-  site.address.line2,
   site.address.city,
   site.address.region,
   site.address.postcode,
 ].join(", ");
 
-export const nav = [
+/** Address split for multi-line display in the footer and contact page. */
+export const addressLines = [
+  site.address.line1,
+  site.address.city,
+  `${site.address.region} ${site.address.postcode}`,
+];
+
+export type NavItem = { href: string; label: string; hidden?: boolean };
+
+/**
+ * Set `hidden: true` on an item to keep the page live and linked from the
+ * footer while dropping it from the header nav and mobile drawer.
+ */
+export const nav: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
   { href: "/sectors", label: "Sectors" },
   { href: "/about", label: "About" },
-  { href: "/careers", label: "Careers" },
   { href: "/contact", label: "Contact" },
-] as const;
+  // Careers is disabled — the page lives at src/app/_careers/ and is out of
+  // routing. To restore: rename that folder to `careers`, re-add
+  // { href: "/careers", label: "Careers" } here and to the footer, and put
+  // the /careers entry back in sitemap.ts.
+];
+
+export const headerNav = nav.filter((item) => !item.hidden);

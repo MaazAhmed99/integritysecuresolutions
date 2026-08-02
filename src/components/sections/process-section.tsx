@@ -27,10 +27,10 @@ export function ProcessSection() {
           {processSteps.map((step, index) => (
             <Reveal key={step.number} delay={index * 100} as="li" className="relative">
               <div className="flex flex-col items-start">
-                <span className="relative z-10 flex size-12 items-center justify-center rounded-full border border-ink-900/10 bg-white text-gold-600 shadow-lift">
+                <span className="relative z-10 flex size-12 items-center justify-center rounded-full border border-ink-900/10 bg-white text-brand-600 shadow-lift">
                   <Icon name={step.icon} className="size-5" />
                 </span>
-                <span className="mt-6 font-display text-xs font-bold uppercase tracking-[0.2em] text-gold-600">
+                <span className="mt-6 font-display text-xs font-bold uppercase tracking-[0.2em] text-brand-600">
                   Step {step.number}
                 </span>
                 <h3 className="mt-2 text-lg font-bold text-ink-900">{step.title}</h3>

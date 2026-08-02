@@ -74,7 +74,7 @@ export function Counter({
   return (
     <span ref={ref} className="tabular-nums">
       {display.toLocaleString("en-GB")}
-      <span className="text-gold-500">{suffix}</span>
+      <span className="text-brand-500">{suffix}</span>
     </span>
   );
 }

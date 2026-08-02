@@ -7,7 +7,7 @@ import { Field, TextArea } from "@/components/form-fields";
 import { SectionHeading } from "@/components/ui";
 import { CtaBand } from "@/components/sections/cta-band";
 import { img } from "@/lib/images";
-import { formattedAddress, site } from "@/lib/site";
+import { addressLines, formattedAddress, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -27,6 +27,24 @@ export default function ContactPage() {
         image={img.cityNight}
       />
 
+      {/* Map sits above the contact details and message form so visitors can
+          place the office before deciding how to get in touch. */}
+      <section className="bg-sand-100 py-16">
+        <div className="container-page">
+          <Reveal>
+            <div className="overflow-hidden rounded-card border border-ink-900/10 shadow-lift">
+              <iframe
+                title={`Map showing the ${site.legalName} office in ${site.address.city}`}
+                src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-96 w-full border-0"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="section bg-white">
         <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5">
@@ -42,16 +60,16 @@ export default function ContactPage() {
               <Reveal delay={80}>
                 <a
                   href={site.phoneHref}
-                  className="group flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5 transition-all hover:border-gold-500/50 hover:shadow-lift"
+                  className="group flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5 transition-all hover:border-brand-500/50 hover:shadow-lift"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                     <Icon name="phone" className="size-5" />
                   </span>
                   <span>
                     <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-900/45">
                       Phone
                     </span>
-                    <span className="mt-1 block font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-gold-600">
+                    <span className="mt-1 block font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-brand-600">
                       {site.phone}
                     </span>
                   </span>
@@ -61,16 +79,16 @@ export default function ContactPage() {
               <Reveal delay={140}>
                 <a
                   href={`mailto:${site.email}`}
-                  className="group flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5 transition-all hover:border-gold-500/50 hover:shadow-lift"
+                  className="group flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5 transition-all hover:border-brand-500/50 hover:shadow-lift"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                     <Icon name="mail" className="size-5" />
                   </span>
                   <span className="min-w-0">
                     <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-900/45">
                       Email
                     </span>
-                    <span className="mt-1 block break-all font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-gold-600">
+                    <span className="mt-1 block break-all font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-brand-600">
                       {site.email}
                     </span>
                   </span>
@@ -79,7 +97,7 @@ export default function ContactPage() {
 
               <Reveal delay={200}>
                 <div className="flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                     <Icon name="pin" className="size-5" />
                   </span>
                   <div>
@@ -87,11 +105,11 @@ export default function ContactPage() {
                       Office
                     </span>
                     <address className="mt-1 not-italic text-sm leading-relaxed text-ink-900/75">
-                      {site.address.line1}
-                      <br />
-                      {site.address.line2}
-                      <br />
-                      {site.address.city}, {site.address.region} {site.address.postcode}
+                      {addressLines.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))}
                     </address>
                   </div>
                 </div>
@@ -99,7 +117,7 @@ export default function ContactPage() {
 
               <Reveal delay={260}>
                 <div className="flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-gold-500">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
                     <Icon name="clock" className="size-5" />
                   </span>
                   <div className="flex-1">
@@ -149,22 +167,6 @@ export default function ContactPage() {
               </EnquiryForm>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-sand-100 py-16">
-        <div className="container-page">
-          <Reveal>
-            <div className="overflow-hidden rounded-card border border-ink-900/10 shadow-lift">
-              <iframe
-                title={`Map showing the ${site.legalName} office in ${site.address.city}`}
-                src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-96 w-full border-0"
-              />
-            </div>
-          </Reveal>
         </div>
       </section>
 
