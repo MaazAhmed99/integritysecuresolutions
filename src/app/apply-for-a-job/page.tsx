@@ -3,33 +3,23 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Icon } from "@/components/icons";
 import { EnquiryForm } from "@/components/enquiry-form";
-import { Field, Select, TextArea } from "@/components/form-fields";
+import { Field, NameField, Select, TextArea } from "@/components/form-fields";
 import { CheckItem, SectionHeading } from "@/components/ui";
 import { CtaBand } from "@/components/sections/cta-band";
 import { img } from "@/lib/images";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Careers — Apply for a Job",
+  title: "Apply for a Job",
   description:
     `Apply to join ${site.legalName}. We recruit SIA licensed security officers, dog handlers, mobile patrol drivers and CCTV operators across ${site.serviceArea.short} and the UK.`,
-  alternates: { canonical: "/careers" },
+  alternates: { canonical: "/apply-for-a-job" },
 };
 
-const roles = [
-  "Static security officer",
-  "Door supervisor",
-  "Dog handler",
-  "Mobile patrol driver",
-  "CCTV operator",
-  "Supervisor / account manager",
-];
-
-const licenceOptions = [
-  "Yes — front line SIA licence held",
-  "Applied for, awaiting issue",
-  "No licence yet",
-];
+/* Screening questions, in the order recruitment works through them. */
+const yesNo = ["Yes", "No"];
+const rightToWorkOptions = ["Full rights to work", "Student"];
+const drivingLicenceOptions = ["UK licence", "International licence", "No licence"];
 
 const benefits = [
   { icon: "badge", title: "Consistent sites", body: "We keep officers on the same sites so you build a real routine." },
@@ -38,12 +28,12 @@ const benefits = [
   { icon: "users", title: "Real progression", body: "Supervisor and account manager routes for officers who want them." },
 ] as const;
 
-export default function CareersPage() {
+export default function ApplyForAJobPage() {
   return (
     <>
       <PageHeader
         eyebrow="Careers"
-        title={`Work with ${site.legalName}`}
+        title="Apply for a Job"
         description="We are always looking for reliable, licensed officers who turn up on time and take the job seriously. If that is you, we would like to hear from you."
         image={img.staticGuarding}
       />
@@ -88,14 +78,14 @@ export default function CareersPage() {
             <Reveal delay={100}>
               <EnquiryForm
                 kind="careers"
-                submitLabel="Submit application"
+                submitLabel="Submit"
                 successTitle="Application received"
                 successBody="Thank you for applying. Our recruitment team reviews every application and will be in touch if there is a suitable role. Please have your SIA licence and references ready."
               >
-                <Field id="name" label="Full name" required autoComplete="name" placeholder="Jane Smith" />
+                <NameField required className="sm:col-span-2" />
                 <Field
                   id="phone"
-                  label="Phone"
+                  label="Phone Number"
                   type="tel"
                   required
                   autoComplete="tel"
@@ -107,22 +97,46 @@ export default function CareersPage() {
                   type="email"
                   required
                   autoComplete="email"
-                  className="sm:col-span-2"
                   placeholder="you@example.com"
                 />
-                <Select id="role" label="Role you are applying for" required options={roles} />
-                <Select id="siaLicence" label="SIA licence status" options={licenceOptions} />
-                <Field
-                  id="location"
-                  label="Areas you can work"
-                  className="sm:col-span-2"
-                  placeholder="e.g. Birmingham, Solihull, Coventry"
+                {/* Screening questions — every one of these decides which sites
+                    an applicant can actually be put on. */}
+                <Select
+                  id="rightToWork"
+                  label="Rights to Work"
+                  required
+                  options={rightToWorkOptions}
+                />
+                <Select id="siaLicence" label="SIA Licence" required options={yesNo} />
+                <Select
+                  id="drivingLicence"
+                  label="Driving Licence"
+                  required
+                  options={drivingLicenceOptions}
+                />
+                <Select id="carAvailable" label="Car Available" required options={yesNo} />
+                <Select id="cctvCertificate" label="CCTV Certificate" required options={yesNo} />
+                <Select id="dogHandling" label="Dog Handling Unit" required options={yesNo} />
+                <Select id="nasduTraining" label="NASDU Training" required options={yesNo} />
+                <Select
+                  id="securityExperience"
+                  label="Currently working, or have worked, in the security industry?"
+                  required
+                  options={yesNo}
                 />
                 <TextArea
-                  id="experience"
-                  label="Relevant experience"
+                  id="companies"
+                  label="Companies you have worked for, or work for now"
+                  required
+                  rows={3}
                   className="sm:col-span-2"
-                  placeholder="Where you have worked, the sites you have covered, availability and shift preferences…"
+                  placeholder="Company names and rough dates…"
+                />
+                <TextArea
+                  id="message"
+                  label="Comment or Message (optional)"
+                  className="sm:col-span-2"
+                  placeholder="Availability, shift preferences, anything else we should know…"
                   hint="Please do not include your SIA licence number or any ID documents in this form — we will request those securely if we invite you to interview."
                 />
               </EnquiryForm>

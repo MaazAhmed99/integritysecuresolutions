@@ -3,30 +3,22 @@ import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Icon } from "@/components/icons";
 import { EnquiryForm } from "@/components/enquiry-form";
-import { Field, Select, TextArea } from "@/components/form-fields";
+import { Field, NameField, Select, TextArea } from "@/components/form-fields";
 import { CtaBand } from "@/components/sections/cta-band";
 import { services } from "@/lib/services";
 import { img } from "@/lib/images";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Request a Security Quote",
+  title: "Request Security Quote",
   description:
     `Request a free, no-obligation security quote from ${site.legalName}. Free site survey, itemised pricing and no minimum contract length.`,
   alternates: { canonical: "/quote" },
 };
 
-const serviceOptions = [...services.map((service) => service.title), "Not sure — please advise"];
-
-const siteTypes = [
-  "Construction site",
-  "Office / corporate",
-  "Retail unit",
-  "Warehouse / logistics",
-  "Event or venue",
-  "Residential / estate",
-  "Vacant property",
-  "Other",
+const serviceOptions = [
+  ...services.map((service) => service.title),
+  "Other (explain in message)",
 ];
 
 const promises = [
@@ -41,7 +33,7 @@ export default function QuotePage() {
     <>
       <PageHeader
         eyebrow="Free quote"
-        title="Request a security quote"
+        title="Request Security Quote"
         description="Tell us about the site, the hours you need covered and what concerns you. We will survey it free of charge and come back with a written, itemised proposal."
         image={img.meeting}
       />
@@ -52,12 +44,19 @@ export default function QuotePage() {
             <Reveal>
               <EnquiryForm
                 kind="quote"
-                submitLabel="Send my request"
+                submitLabel="Submit"
                 successTitle="Request received"
                 successBody="Thank you — a member of our team will review your requirements and come back to you within one working day. For anything urgent, please call us directly."
               >
-                <Field id="name" label="Your name" required autoComplete="name" placeholder="Jane Smith" />
-                <Field id="company" label="Company" autoComplete="organization" placeholder="Optional" />
+                {/* One field per row, in the order most people can answer it:
+                    who you are, how to reach you, then the site itself. */}
+                <NameField required className="sm:col-span-2" />
+                <Field
+                  id="company"
+                  label="Company Name"
+                  autoComplete="organization"
+                  className="sm:col-span-2"
+                />
                 <Field
                   id="email"
                   label="Email"
@@ -65,27 +64,35 @@ export default function QuotePage() {
                   required
                   autoComplete="email"
                   placeholder="you@company.co.uk"
+                  className="sm:col-span-2"
                 />
                 <Field
                   id="phone"
-                  label="Phone"
+                  label="Phone Number"
                   type="tel"
                   required
                   autoComplete="tel"
                   placeholder="07700 900000"
+                  className="sm:col-span-2"
                 />
-                <Select id="service" label="Service required" required options={serviceOptions} />
-                <Select id="siteType" label="Type of site" options={siteTypes} />
                 <Field
                   id="location"
-                  label="Site location"
+                  label="Location of Site"
+                  required
                   placeholder="Town or postcode"
                   hint="Helps us confirm coverage and travel time."
+                  className="sm:col-span-2"
                 />
-                <Field id="startDate" label="Required from" type="date" />
+                <Select
+                  id="service"
+                  label="Type of Security Service"
+                  required
+                  options={serviceOptions}
+                  className="sm:col-span-2"
+                />
                 <TextArea
                   id="message"
-                  label="Tell us about the site"
+                  label="Comment or Message"
                   className="sm:col-span-2"
                   placeholder="Hours to cover, number of entrances, any incidents so far, anything we should know…"
                 />

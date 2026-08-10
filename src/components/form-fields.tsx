@@ -98,6 +98,56 @@ export function Select({
 }
 
 /**
+ * Two-box name field under a single legend, with the part name captioned
+ * beneath each box. Submits as `firstName` and `lastName`.
+ */
+export function NameField({
+  legend = "Name",
+  required,
+  className = "",
+}: {
+  legend?: string;
+  required?: boolean;
+  className?: string;
+}) {
+  const parts = [
+    { id: "firstName", caption: "First", autoComplete: "given-name" },
+    { id: "lastName", caption: "Last", autoComplete: "family-name" },
+  ] as const;
+
+  return (
+    <fieldset className={className}>
+      <legend className="mb-1.5 block text-sm font-medium text-ink-900">
+        {legend}
+        {required ? (
+          <span aria-hidden className="ml-0.5 text-brand-600">
+            *
+          </span>
+        ) : null}
+      </legend>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {parts.map((part) => (
+          <div key={part.id}>
+            <input
+              id={part.id}
+              name={part.id}
+              required={required}
+              autoComplete={part.autoComplete}
+              className={control}
+            />
+            {/* Caption sits under the box; the legend supplies the context, so
+                screen readers announce "Name, First". */}
+            <label htmlFor={part.id} className="mt-1.5 block text-xs text-ink-900/50">
+              {part.caption}
+            </label>
+          </div>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
+/**
  * Multi-select rendered as checkboxes. All boxes share one `name`, so the
  * submitted values arrive as a repeated key — EnquiryForm joins them.
  */

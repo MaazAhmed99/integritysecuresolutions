@@ -85,7 +85,9 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+                /* Tighter padding at lg — six items including "Request Security
+                   Quote" will not fit the row at full spacing. */
+                className={`relative whitespace-nowrap px-3 py-2 text-sm font-medium transition-colors xl:px-4 ${
                   isActive(item.href)
                     ? "text-brand-600"
                     : "text-ink-900 hover:text-brand-600"
@@ -95,7 +97,7 @@ export function SiteHeader() {
                 {isActive(item.href) ? (
                   <span
                     aria-hidden
-                    className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-brand-500"
+                    className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-brand-500 xl:inset-x-4"
                   />
                 ) : null}
               </Link>
@@ -112,7 +114,15 @@ export function SiteHeader() {
               <span className="hidden sm:inline">Call</span>
             </a>
 
-            <Link href="/quote" className={buttonClass({ size: "sm", className: "hidden sm:inline-flex" })}>
+            {/* Hidden at lg only: the nav already carries "Request Security
+                Quote" there, and both together overflow the row. */}
+            <Link
+              href="/quote"
+              className={buttonClass({
+                size: "sm",
+                className: "hidden sm:inline-flex lg:hidden xl:inline-flex",
+              })}
+            >
               Get a free quote
               <Icon name="arrow" className="size-4" />
             </Link>

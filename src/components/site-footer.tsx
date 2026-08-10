@@ -9,6 +9,7 @@ const companyLinks = [
   { href: "/sectors", label: "Sectors we cover" },
   { href: "/contact", label: "Contact" },
   { href: "/quote", label: "Request a quote" },
+  { href: "/apply-for-a-job", label: "Apply for a job" },
 ];
 
 export function SiteFooter() {

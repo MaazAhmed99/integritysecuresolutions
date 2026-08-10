@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
-import { Icon } from "@/components/icons";
+import { Icon, type IconName } from "@/components/icons";
 import { EnquiryForm } from "@/components/enquiry-form";
 import { Field, TextArea } from "@/components/form-fields";
 import { SectionHeading } from "@/components/ui";
@@ -17,149 +18,169 @@ export const metadata: Metadata = {
 
 const mapQuery = encodeURIComponent(formattedAddress);
 
+/** One tile in the four-up details row above the form. */
+function InfoCard({
+  icon,
+  title,
+  delay,
+  children,
+}: {
+  icon: IconName;
+  title: string;
+  delay: number;
+  children: ReactNode;
+}) {
+  return (
+    <Reveal delay={delay}>
+      <div className="h-full rounded-card border border-ink-900/10 bg-white p-6 text-center shadow-lift transition-all hover:-translate-y-1 hover:border-brand-500/40">
+        <span className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-ink-900 text-brand-500">
+          <Icon name={icon} className="size-6" />
+        </span>
+        <h3 className="mt-5 text-lg font-bold text-ink-900">{title}</h3>
+        <div className="mt-2.5 text-sm leading-relaxed text-ink-900/65">{children}</div>
+      </div>
+    </Reveal>
+  );
+}
+
 export default function ContactPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Contact"
-        title="Talk to our security team"
-        description="Call, email or send us a message. Whatever the enquiry, you will speak to somebody who can actually make a decision."
+        eyebrow="Need professional security?"
+        title={`Contact ${site.legalName}`}
+        description={`Get reliable security services today. Our experienced officers protect businesses, construction sites, events and private properties across ${site.serviceArea.city} and ${site.serviceArea.region} — tell us what you need and we will come back with a free, no-obligation quote.`}
         image={img.cityNight}
       />
 
-      {/* Map sits above the contact details and message form so visitors can
-          place the office before deciding how to get in touch. */}
-      <section className="bg-sand-100 py-16">
-        <div className="container-page">
+      {/* Office strip — names the city before the detail tiles, so visitors
+          outside our patch can rule us in or out immediately. */}
+      <section className="relative isolate overflow-hidden bg-ink-900">
+        <div aria-hidden className="grid-texture absolute inset-0 opacity-40" />
+        <div className="container-page relative py-8">
           <Reveal>
-            <div className="overflow-hidden rounded-card border border-ink-900/10 shadow-lift">
-              <iframe
-                title={`Map showing the ${site.legalName} office in ${site.address.city}`}
-                src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-96 w-full border-0"
-              />
+            <div className="flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-center sm:gap-4 sm:text-left">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/8 text-brand-400">
+                <Icon name="pin" className="size-5" />
+              </span>
+              <p className="text-white/70">
+                <strong className="block font-display text-lg font-bold text-white sm:inline sm:pr-3">
+                  {site.address.city}
+                </strong>
+                {formattedAddress}
+              </p>
             </div>
           </Reveal>
         </div>
       </section>
 
+      {/* Four ways to reach us, before the form — most enquiries are quicker
+          by phone, and the tiles make that obvious. */}
+      <section className="section bg-sand-100">
+        <div className="container-page grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <InfoCard icon="pin" title="Physical Address" delay={0}>
+            <address className="not-italic">
+              {addressLines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </address>
+          </InfoCard>
+
+          <InfoCard icon="clock" title="Work Hours" delay={80}>
+            <dl className="space-y-1">
+              {site.hours.map((entry) => (
+                <div key={entry.days}>
+                  <dt className="inline text-ink-900/60">{entry.days}: </dt>
+                  <dd className="inline font-medium text-ink-900">{entry.time}</dd>
+                </div>
+              ))}
+            </dl>
+          </InfoCard>
+
+          <InfoCard icon="mail" title="Email Address" delay={140}>
+            <a
+              href={`mailto:${site.email}`}
+              className="break-all font-medium text-ink-900 transition-colors hover:text-brand-600"
+            >
+              {site.email}
+            </a>
+          </InfoCard>
+
+          <InfoCard icon="phone" title="Phone Numbers" delay={200}>
+            <a
+              href={site.phoneHref}
+              className="font-medium text-ink-900 transition-colors hover:text-brand-600"
+            >
+              {site.phone}
+            </a>
+            <span className="mt-1 block text-xs text-ink-900/50">24/7 emergency response</span>
+          </InfoCard>
+        </div>
+      </section>
+
       <section className="section bg-white">
-        <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
+        <div className="container-page">
+          <Reveal>
+            <SectionHeading
+              align="center"
+              eyebrow="Contact Us"
+              title="Reach out to Us"
+              description="Send us a message and we will reply within one working day. For live incidents, call the emergency line instead — it is answered around the clock."
+            />
+          </Reveal>
+
+          {/* Map left, form right — mirrors the order people work in: check
+              where we are, then get in touch. */}
+          <div className="mt-14 grid items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
             <Reveal>
-              <SectionHeading
-                eyebrow="Get in touch"
-                title="Details you can use right now"
-                description="Our lines are staffed through the working week, with a 24/7 response line for live incidents."
-              />
+              <div className="h-full overflow-hidden rounded-card border border-ink-900/10 shadow-lift">
+                <iframe
+                  title={`Map showing the ${site.legalName} office in ${site.address.city}`}
+                  src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full min-h-[26rem] w-full border-0"
+                />
+              </div>
             </Reveal>
 
-            <div className="mt-10 space-y-4">
-              <Reveal delay={80}>
-                <a
-                  href={site.phoneHref}
-                  className="group flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5 transition-all hover:border-brand-500/50 hover:shadow-lift"
-                >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
-                    <Icon name="phone" className="size-5" />
-                  </span>
-                  <span>
-                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-900/45">
-                      Phone
-                    </span>
-                    <span className="mt-1 block font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-brand-600">
-                      {site.phone}
-                    </span>
-                  </span>
-                </a>
-              </Reveal>
-
-              <Reveal delay={140}>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="group flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5 transition-all hover:border-brand-500/50 hover:shadow-lift"
-                >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
-                    <Icon name="mail" className="size-5" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-900/45">
-                      Email
-                    </span>
-                    <span className="mt-1 block break-all font-display text-lg font-bold text-ink-900 transition-colors group-hover:text-brand-600">
-                      {site.email}
-                    </span>
-                  </span>
-                </a>
-              </Reveal>
-
-              <Reveal delay={200}>
-                <div className="flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
-                    <Icon name="pin" className="size-5" />
-                  </span>
-                  <div>
-                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-900/45">
-                      Office
-                    </span>
-                    <address className="mt-1 not-italic text-sm leading-relaxed text-ink-900/75">
-                      {addressLines.map((line) => (
-                        <span key={line} className="block">
-                          {line}
-                        </span>
-                      ))}
-                    </address>
-                  </div>
-                </div>
-              </Reveal>
-
-              <Reveal delay={260}>
-                <div className="flex items-start gap-4 rounded-card border border-ink-900/10 bg-sand-50 p-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-ink-900 text-brand-500">
-                    <Icon name="clock" className="size-5" />
-                  </span>
-                  <div className="flex-1">
-                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-ink-900/45">
-                      Opening hours
-                    </span>
-                    <dl className="mt-2 space-y-1.5 text-sm">
-                      {site.hours.map((entry) => (
-                        <div key={entry.days} className="flex justify-between gap-4">
-                          <dt className="text-ink-900/60">{entry.days}</dt>
-                          <dd className="font-medium text-ink-900">{entry.time}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7">
             <Reveal delay={100}>
               <EnquiryForm
                 kind="contact"
-                submitLabel="Send message"
+                submitLabel="Send Message"
                 successTitle="Message sent"
                 successBody="Thanks for getting in touch. We aim to reply within one working day — if it is urgent, please call us on the number below."
               >
-                <Field id="name" label="Your name" required autoComplete="name" placeholder="Jane Smith" />
-                <Field id="company" label="Company" autoComplete="organization" placeholder="Optional" />
+                {/* Full-width fields throughout: the form sits in a half-width
+                    column, so paired inputs would be too cramped to read. */}
+                <Field
+                  id="name"
+                  label="Full Name"
+                  required
+                  autoComplete="name"
+                  placeholder="Jane Smith"
+                  className="sm:col-span-2"
+                />
                 <Field
                   id="email"
-                  label="Email"
+                  label="Email Address"
                   type="email"
                   required
                   autoComplete="email"
                   placeholder="you@company.co.uk"
+                  className="sm:col-span-2"
                 />
-                <Field id="phone" label="Phone" type="tel" autoComplete="tel" placeholder="Optional" />
+                <Field
+                  id="subject"
+                  label="Subject"
+                  placeholder="What is your enquiry about?"
+                  className="sm:col-span-2"
+                />
                 <TextArea
                   id="message"
-                  label="How can we help?"
+                  label="Comment or Message"
                   required
                   className="sm:col-span-2"
                   placeholder="Tell us what you need and where the site is…"

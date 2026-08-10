@@ -82,13 +82,13 @@ export type NavItem = { href: string; label: string; hidden?: boolean };
 export const nav: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
-  { href: "/sectors", label: "Sectors" },
+  { href: "/quote", label: "Request Security Quote" },
+  { href: "/apply-for-a-job", label: "Apply for a Job" },
+  // Sectors stays live and linked from the footer, but is out of the header
+  // nav — the row only holds so many items.
+  { href: "/sectors", label: "Sectors", hidden: true },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
-  // Careers is disabled — the page lives at src/app/_careers/ and is out of
-  // routing. To restore: rename that folder to `careers`, re-add
-  // { href: "/careers", label: "Careers" } here and to the footer, and put
-  // the /careers entry back in sitemap.ts.
 ];
 
 export const headerNav = nav.filter((item) => !item.hidden);
