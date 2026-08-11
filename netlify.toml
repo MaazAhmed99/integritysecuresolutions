@@ -1,0 +1,15 @@
+# Netlify deployment.
+# The Next.js runtime plugin is installed by Netlify itself — it does not need
+# to be a dependency in package.json.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next 15 needs 18.18+; pinned so a change to Netlify's default cannot
+  # break the build without warning.
+  NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

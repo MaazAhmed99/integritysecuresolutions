@@ -16,8 +16,8 @@ architecture and conversion paths.
 | Styling | Tailwind CSS v4 (`@theme` tokens in `src/app/globals.css`) |
 | Fonts | Archivo (headings) + Inter (body) via `next/font` |
 | Images | Unsplash, served through `next/image` (AVIF/WebP, lazy) |
-| Forms | `/api/enquiry` route with optional Resend delivery |
-| Dependencies | Zero runtime dependencies beyond Next/React |
+| Forms | `/api/enquiry` route, delivered over SMTP or Resend |
+| Dependencies | Next/React plus `nodemailer` for SMTP delivery |
 
 ## Running it
 
@@ -37,6 +37,25 @@ Production build:
 node node_modules/next/dist/bin/next build
 ```
 
+## Deploying
+
+**Vercel**, imported from the GitHub repo. No configuration and no environment variables
+are required — it detects Next.js, and every push to `main` redeploys.
+
+Forms deploy in their unconfigured state: they validate, show the success panel and write
+the submission to the function log, but send no email until the variables in
+[`EMAIL-SETUP.md`](./EMAIL-SETUP.md) are added under
+*Project → Settings → Environment Variables*. They take effect on the next deploy.
+
+Optionally set `NEXT_PUBLIC_SITE_URL` to the deployment's own URL so canonical tags and
+the sitemap match where the site is actually served from.
+
+To attach the real domain: *Settings → Domains*, then point the domain's DNS at Vercel.
+SSL is issued automatically.
+
+[`netlify.toml`](./netlify.toml) is kept so the project can be deployed to Netlify instead;
+Vercel ignores it.
+
 ## Project structure
 
 ```
@@ -46,7 +65,7 @@ src/
     page.tsx                Homepage
     services/               Service index + [slug] detail pages (SSG)
     sectors/                Industries covered
-    about/  contact/  quote/  careers/  privacy/
+    about/  contact/  quote/  apply-for-a-job/  privacy/
     api/enquiry/route.ts    Form handler (validation, honeypot, email)
     sitemap.ts  robots.ts   Generated from the same data as the nav
   components/
@@ -65,14 +84,19 @@ The header, footer, contact page, JSON-LD and forms all read from it.
 
 ## Forms
 
-All three forms (quote, contact, careers) post to `/api/enquiry`, which validates
-input, rejects honeypot submissions and then either:
+All three forms (quote, contact, job application) post to `/api/enquiry`, which validates
+input, rejects honeypot submissions and then delivers by the first route available:
 
-1. **Sends an email** — if `RESEND_API_KEY` and `ENQUIRY_FROM_EMAIL` are set, or
-2. **Logs to the server console** — so nothing is silently lost in development.
+1. **SMTP** — if `SMTP_HOST`, `SMTP_USER` and `SMTP_PASS` are set. Uses the domain mailbox.
+2. **Resend** — if `RESEND_API_KEY` and `ENQUIRY_FROM_EMAIL` are set. Also the automatic
+   fallback when SMTP is configured but fails.
+3. **The server console** — so nothing is silently lost in development.
 
-Copy `.env.example` to `.env.local` and fill in the values to enable delivery.
-Any transactional provider works; Resend is called over plain REST so there is no SDK to install.
+`ENQUIRY_TO_EMAIL` accepts a comma-separated list of recipients. Copy `.env.example` to
+`.env.local` and fill it in.
+
+**See [`EMAIL-SETUP.md`](./EMAIL-SETUP.md)** for the full walkthrough, including forwarding
+`info@` to a Gmail and replying from it.
 
 ## What changed vs the WordPress site
 
