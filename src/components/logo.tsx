@@ -2,47 +2,49 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 
 /**
- * ISS monogram. The outer I and S carry the neutral colour; the middle S is
- * knocked out of a red angular block so the centre letter reads as a distinct
- * mark rather than three identical letterforms.
+ * Chevron tile. The three rising chevrons read as escalating cover — white,
+ * brand red, then a muted grey. Colours come from the theme variables in
+ * globals.css so a re-skin still flows through here.
  */
-export function LogoMark({
-  tone = "dark",
-  className = "",
-}: {
-  tone?: "light" | "dark";
-  className?: string;
-}) {
-  const letter = tone === "light" ? "text-white" : "text-ink-900";
-
+export function LogoMark({ className = "size-11" }: { className?: string }) {
   return (
-    <span
-      aria-hidden
-      className={`flex items-center font-display text-[1.75rem] font-extrabold leading-none tracking-[-0.04em] ${className}`}
-    >
-      <span className={letter}>I</span>
-      <span className="relative mx-[3px] inline-flex -skew-x-12 items-center justify-center bg-brand-500 px-[5px] py-[3px] transition-colors duration-300 group-hover:bg-brand-600">
-        <span className="inline-block skew-x-12 text-white">S</span>
-      </span>
-      <span className={letter}>S</span>
-    </span>
+    <svg viewBox="0 0 96 96" aria-hidden className={className}>
+      <rect width="96" height="96" rx="24" fill="var(--color-ink-900)" />
+      <g fill="none" strokeWidth={11} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M25 39 48 22 71 39" stroke="#ffffff" />
+        <path
+          d="M25 59 48 42 71 59"
+          stroke="var(--color-brand-500)"
+          className="transition-[stroke] duration-300 group-hover:stroke-[var(--color-brand-400)]"
+        />
+        <path d="M25 79 48 62 71 79" stroke="#8a94a6" />
+      </g>
+    </svg>
   );
 }
 
 export function Logo({ tone = "light" }: { tone?: "light" | "dark" }) {
-  const secondary = tone === "light" ? "text-white/60" : "text-ink-900/55";
+  const primary = tone === "light" ? "text-white" : "text-ink-900";
+  const secondary = tone === "light" ? "text-white/55" : "text-ink-900/50";
 
   return (
     <Link
       href="/"
-      className="group flex flex-col gap-1"
+      className="group flex items-center gap-3"
       aria-label={`${site.legalName} — home`}
     >
-      <LogoMark tone={tone} />
-      <span
-        className={`text-[0.5rem] font-semibold uppercase tracking-[0.18em] whitespace-nowrap ${secondary}`}
-      >
-        Integrity Secure Solutions
+      <LogoMark className="size-11 shrink-0" />
+      <span className="flex flex-col leading-none">
+        <span
+          className={`font-display text-xl font-extrabold uppercase tracking-[-0.01em] ${primary}`}
+        >
+          Integrity
+        </span>
+        <span
+          className={`mt-1.5 text-[0.5rem] font-semibold uppercase tracking-[0.22em] whitespace-nowrap ${secondary}`}
+        >
+          Secure Solutions
+        </span>
       </span>
     </Link>
   );

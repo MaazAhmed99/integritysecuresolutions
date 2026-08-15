@@ -110,21 +110,6 @@ export function SiteFooter() {
           <p>
             © {new Date().getFullYear()} {site.legalName}. All rights reserved.
           </p>
-          <p>
-            Photography from{" "}
-            <a
-              href="https://unsplash.com"
-              className="underline underline-offset-4 transition-colors hover:text-brand-600"
-              rel="noreferrer noopener"
-              target="_blank"
-            >
-              Unsplash
-            </a>
-            {" · "}
-            <Link href="/privacy" className="transition-colors hover:text-brand-600">
-              Privacy policy
-            </Link>
-          </p>
         </div>
       </div>
     </footer>

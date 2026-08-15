@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110" role="img" aria-label="Integrity Secure Solutions">
+  <!-- ISS monogram — the mark already on the site, set as a horizontal lockup -->
+  <g transform="translate(6 6) scale(2.2)">
+    <rect x="5" y="12" width="4" height="16" fill="currentColor"/>
+    <path d="M14.6 12h11.2l-2.4 16H12.2l2.4-16Z" fill="#e4002b"/>
+    <path d="M23 15.6c-.9-.5-2-.8-3.1-.8-2.1 0-3.4 1-3.4 2.5 0 1.2.8 1.9 2.5 2.4 1.2.4 1.6.7 1.6 1.2 0 .6-.6 1-1.5 1-1.1 0-2.2-.4-3-1l-.5 2.6c1 .5 2.2.8 3.4.8 2.3 0 3.8-1.1 3.8-2.7 0-1.3-.7-2-2.4-2.6-1.3-.4-1.7-.7-1.7-1.2 0-.5.5-.8 1.3-.8.9 0 1.9.3 2.6.7l.4-2.1Z" fill="#fff"/>
+    <path d="M35 15.6c-.9-.5-2-.8-3.1-.8-2.1 0-3.4 1-3.4 2.5 0 1.2.8 1.9 2.5 2.4 1.2.4 1.6.7 1.6 1.2 0 .6-.6 1-1.5 1-1.1 0-2.2-.4-3-1l-.5 2.6c1 .5 2.2.8 3.4.8 2.3 0 3.8-1.1 3.8-2.7 0-1.3-.7-2-2.4-2.6-1.3-.4-1.7-.7-1.7-1.2 0-.5.5-.8 1.3-.8.9 0 1.9.3 2.6.7l.4-2.1Z" fill="currentColor"/>
+  </g>
+
+  <rect x="104" y="26" width="3" height="50" fill="#e4002b"/>
+
+  <text x="124" y="53" fill="currentColor"
+        font-family="Archivo, Inter, 'Segoe UI', system-ui, sans-serif"
+        font-size="27" font-weight="800" letter-spacing="-0.8">INTEGRITY</text>
+  <text x="126" y="75" fill="currentColor" fill-opacity=".62"
+        font-family="Archivo, Inter, 'Segoe UI', system-ui, sans-serif"
+        font-size="12" font-weight="600" letter-spacing="5.2">SECURE SOLUTIONS</text>
+</svg>

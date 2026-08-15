@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Integrity Secure Solutions">
+  <rect width="96" height="96" rx="24" fill="#0d1b2a"/>
+  <g fill="none" stroke-width="11" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M25 39 48 22 71 39" stroke="#ffffff"/>
+    <path d="M25 59 48 42 71 59" stroke="#e4002b"/>
+    <path d="M25 79 48 62 71 79" stroke="#8a94a6"/>
+  </g>
+</svg>

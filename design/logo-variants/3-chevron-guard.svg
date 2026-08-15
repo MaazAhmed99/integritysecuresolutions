@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" role="img" aria-label="Integrity Secure Solutions">
+  <rect x="10" y="15" width="90" height="90" rx="20" fill="#071a30"/>
+  <g fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 52 55 30 80 52" stroke="#fff"/>
+    <path d="M30 74 55 52 80 74" stroke="#e4002b"/>
+    <path d="M30 96 55 74 80 96" stroke="#fff" stroke-opacity=".4"/>
+  </g>
+
+  <text x="122" y="58" fill="currentColor"
+        font-family="Archivo, Inter, 'Segoe UI', system-ui, sans-serif"
+        font-size="32" font-weight="800" letter-spacing="-1">INTEGRITY</text>
+  <text x="124" y="83" fill="currentColor" fill-opacity=".62"
+        font-family="Archivo, Inter, 'Segoe UI', system-ui, sans-serif"
+        font-size="13" font-weight="600" letter-spacing="4.6">SECURE SOLUTIONS</text>
+</svg>
