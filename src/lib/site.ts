@@ -12,16 +12,17 @@ export const site = {
   description:
     "Integrity Secure Solutions provides SIA licensed static guarding, dog handling units, mobile patrols, CCTV monitoring, event security and key holding across Birmingham, the West Midlands and the UK.",
 
-  /* TODO(client): PLACEHOLDER — replace with the real domain before launch,
-     or set NEXT_PUBLIC_SITE_URL in .env.local. Drives canonicals and sitemap. */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://integritysecuresolutions.co.uk",
+  /* Drives canonicals, the sitemap and Open Graph tags. Override per
+     environment with NEXT_PUBLIC_SITE_URL. */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://integritysecuresolutions.com",
 
   /** Displayed in UK national format; the href stays in +44 international form. */
   phone: "+447438082841",
   phoneHref: "tel:+447438082841",
 
-  /* TODO(client): PLACEHOLDER — replace with the real inbox before launch. */
-  email: "info@integritysecuresolutions.co.uk",
+  /* Shown in the header, footer and contact page. This address must actually
+     receive mail — set up forwarding for it before launch. */
+  email: "info@integritysecuresolutions.com",
 
   address: {
     line1: "797-801 Stratford Road",

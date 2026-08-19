@@ -13,8 +13,8 @@ All values live in `src/lib/site.ts`.
 | `phone` / `phoneHref` | +447438082841 / `tel:+447438082841` | ✅ Real — client supplied |
 | `address` | 797-801 Stratford Road, Birmingham, West Midlands B11 4DA | ✅ Real — client supplied |
 | `serviceArea` | Birmingham & the West Midlands | ⚠️ Assumed from the postcode — confirm actual radius |
-| `email` | info@integritysecuresolutions.co.uk | ❌ Invented placeholder — set the real inbox |
-| `url` | https://integritysecuresolutions.co.uk | ❌ Invented placeholder — set the real domain |
+| `email` | info@integritysecuresolutions.com | ✅ Real — forwards to the owner’s Gmail via Namecheap |
+| `url` | https://integritysecuresolutions.com | ✅ Real — registered at Namecheap, served by Vercel |
 
 The address drives the Google Map embed on `/contact` and the `SecurityService` JSON-LD in
 `src/app/layout.tsx` automatically. `serviceArea` drives every mention of the operating

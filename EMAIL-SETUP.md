@@ -1,117 +1,123 @@
 # Email setup
 
-Two separate things, both needed before launch:
+Two separate jobs. Neither needs a code change — the delivery code in
+`src/app/api/enquiry/route.ts` is already written and deployed.
 
 | | What it does | Where it is done |
 |---|---|---|
-| **Part 1** | Website form submissions arrive in your Gmail | Environment variables (below) |
-| **Part 2** | Mail sent *to* info@integritysecuresolutions.co.uk arrives in your Gmail | Your email host's control panel |
+| **Part 1** | Website form submissions arrive in your Gmail | Resend + Vercel environment variables |
+| **Part 2** | Mail sent *to* info@integritysecuresolutions.com arrives in your Gmail | Namecheap DNS |
 
-> **Never put the mailbox password in a file that gets committed, or paste it into a chat.**
-> It goes in `.env.local` (git ignores that file) and in your hosting dashboard. Nowhere else.
+> **Never paste an API key or password into a committed file, or into a chat.**
+> Keys go in `.env.local` (git ignores it) and in Vercel's dashboard. Nowhere else.
 
 ---
 
-## Part 1 — Form submissions into your Gmail
+## Part 1 — form submissions into your Gmail
 
-### Step 1: get your SMTP details
+Getting mail *out* needs a sending service, not a mailbox. Resend's free tier covers
+3,000 emails a month, which is far beyond what a contact form produces.
 
-Your email host gives you four values. Where to find them:
+### Step 1: verify a subdomain in Resend
 
-| Host | SMTP host | Port | Username |
-|---|---|---|---|
-| cPanel (most UK resellers) | `mail.integritysecuresolutions.co.uk` | 465 | the full email address |
-| Hostinger | `smtp.hostinger.com` | 465 | the full email address |
-| Zoho Mail | `smtp.zoho.eu` | 465 | the full email address |
-| Google Workspace | `smtp.gmail.com` | 465 | the full email address, **App Password** not the login password |
-| Microsoft 365 | `smtp.office365.com` | 587 | the full email address |
+Sign up at [resend.com](https://resend.com), add a domain, and enter
+**`send.integritysecuresolutions.com`** — the subdomain, not the root.
 
-The password is the mailbox password you set when you created `info@…` — except on Google
-Workspace and Microsoft 365, which need an App Password generated in their security settings.
+This is not optional. Part 2 puts forwarding MX and SPF records on the root domain, and
+two SPF records on one name is a hard failure that sends everything to spam. Verifying a
+subdomain keeps the two systems apart.
 
-### Step 2: fill in the values
+Resend shows several DNS records. Paste them into Namecheap → Domain List → Manage →
+**Advanced DNS**, then wait for the status to read "Verified". Usually minutes.
 
-Copy `.env.example` to `.env.local` in the project folder, then fill in:
+### Step 2: create an API key
+
+Resend → API Keys → Create. Copy it — it is shown once.
+
+### Step 3: set the variables in Vercel
+
+Project → Settings → **Environment Variables**:
 
 ```
-ENQUIRY_TO_EMAIL=your.address@gmail.com,info@integritysecuresolutions.co.uk
-SMTP_HOST=mail.integritysecuresolutions.co.uk
-SMTP_PORT=465
-SMTP_USER=info@integritysecuresolutions.co.uk
-SMTP_PASS=the mailbox password
+NEXT_PUBLIC_SITE_URL=https://integritysecuresolutions.com
+ENQUIRY_TO_EMAIL=your.address@gmail.com
+RESEND_API_KEY=re_xxxxxxxxxxxx
+ENQUIRY_FROM_EMAIL=website@send.integritysecuresolutions.com
 ```
 
-`ENQUIRY_TO_EMAIL` is a comma-separated list — every address on it gets a copy. Use just the
-Gmail if you would rather not keep a second copy in the info@ mailbox.
+`ENQUIRY_TO_EMAIL` takes a comma-separated list if you want more than one recipient.
 
-### Step 3: put the same values on the live site
+`ENQUIRY_FROM_EMAIL` only has to be *on* the verified subdomain — no mailbox exists at that
+address and none is needed. Replies never go there: the code sets Reply-To to whoever
+submitted the form.
 
-`.env.local` never leaves your computer. On the live host, enter the same five variables in its
-environment settings (Vercel: Project → Settings → Environment Variables; cPanel Node app:
-the "Environment variables" panel; VPS: your `.env` or process manager config), then restart
-the site.
+### Step 4: redeploy
 
-**If email never arrives on the live site but works locally, this step was missed.**
+**Environment variables only apply to deployments made after they are saved.** Vercel →
+Deployments → the most recent one → Redeploy. Skipping this is the single most common
+reason "it still doesn't work".
 
 ---
 
 ## Part 2 — info@ mail into your Gmail
 
-### Forward the mailbox
+The site shows `info@integritysecuresolutions.com` in the header, footer and contact page,
+so that address has to receive mail.
 
-In your email host's control panel:
+Namecheap → Domain List → Manage → **Advanced DNS** → **Mail Settings** → choose
+**Email Forwarding** (the free option — *not* the paid Private Email product). Add:
 
-- **cPanel** — Email → Forwarders → *Add Forwarder* → address `info` → forward to your Gmail
-- **Hostinger** — hPanel → Emails → Manage → Forwarders → *Create*
-- **Zoho** — Control Panel → Users → your user → Mail Forwarding
-- **Google Workspace / Microsoft 365** — the mailbox's own settings → Forwarding
+| Alias | Forwards to |
+|---|---|
+| `info` | your Gmail address |
 
-Takes about two minutes and applies to mail from that moment on.
+Applies to mail from that moment on. Takes about two minutes.
 
-### Reply *as* info@ from Gmail
+### Replying *as* info@ — not available on this setup
 
-Without this, your replies go out from your personal Gmail address, which looks wrong to
-customers. Do it **after** setting up forwarding — Gmail emails a confirmation code to
-`info@`, and forwarding is what delivers that code to you.
+Forwarding delivers mail one way. Replies will go out from your personal Gmail address.
 
-Gmail → Settings (gear) → *See all settings* → **Accounts and Import** → "Send mail as" →
-*Add another email address*:
-
-- Name: `Integrity Secure Solutions`
-- Email: `info@integritysecuresolutions.co.uk`
-- SMTP server, port, username, password: the same four values from Step 1
-- Paste the confirmation code when it lands in your inbox
-
-Now Gmail lets you pick which address a reply comes from.
+To reply as `info@` you need somewhere that can *send* for that address, which means either
+Google Workspace (~£5-6/month, `info@` becomes a real Google account) or Resend's SMTP
+credentials wired into Gmail's "Send mail as". Neither is needed for the forms to work —
+revisit it when replying from the right address starts to matter.
 
 ---
 
-## Testing it
+## Testing
 
-1. Submit the form on `/contact` locally. You should see the success panel, no error in the
-   terminal, and the message in Gmail within a minute.
-2. **Check the spam folder the first time.** Mail from a brand-new domain often lands there
-   once; mark it "Not spam" and Gmail learns.
-3. Hit Reply on that email — it should address the person who filled in the form, not the site.
-4. Repeat on `/quote` and `/apply-for-a-job`, which have the most fields.
-5. Send a mail from your phone to `info@integritysecuresolutions.co.uk` and confirm the
-   forwarder delivers it.
+1. Submit the form on `/contact`. Success panel, then the message in Gmail within a minute.
+2. **Check the spam folder on the first one** and mark "Not spam" — a brand-new sending
+   domain usually lands there once, then Gmail learns.
+3. Hit Reply on that email. It must address the person who filled in the form, not you.
+4. Repeat on `/quote` and `/apply-for-a-job` — they have the most fields, so they also
+   confirm every label renders properly in the email body.
+5. Email `info@integritysecuresolutions.com` from your phone and confirm the forwarder
+   delivers it.
 
 ## When something goes wrong
 
-The terminal (or your host's runtime logs) prints the real reason after `[enquiry]`.
+Vercel → the deployment → **Logs** prints the real reason after `[enquiry]`.
 
 | Symptom | Cause |
 |---|---|
-| `535 Invalid login` | Wrong password, or the username needs to be the *full* email address |
-| Connection times out | The port is blocked — set `SMTP_PORT=587` and try again, or ask the host whether outbound SMTP is allowed |
-| `553` / `501 sender rejected` | The From address must match the mailbox: leave `ENQUIRY_FROM_EMAIL` empty |
-| Form says sent, no email, log shows `[enquiry:contact]` and the fields | No transport is configured — the variables are missing on that environment |
-| Everything works, mail lands in spam | Ask your host to confirm an SPF record exists for the domain |
+| Form says sent, no email, log shows `[enquiry:contact]` and the field values | No transport configured — the variables are missing, or you did not redeploy after saving them |
+| Resend rejects with a domain error | `ENQUIRY_FROM_EMAIL` is not on the verified subdomain |
+| Mail arrives but always in spam | Two SPF records on the root domain, or the Resend DNS records were never verified |
+| Nothing arrives and the log is silent | The deployment predates the variables — redeploy |
 
-## If SMTP is blocked
+## Alternative: your own mailbox over SMTP
 
-Some shared hosts refuse outbound mail to anywhere but their own server. In that case use
-[Resend](https://resend.com) instead: set `RESEND_API_KEY` and `ENQUIRY_FROM_EMAIL`, add the
-DNS records it gives you, and leave the `SMTP_*` variables empty. The site tries SMTP first
-and falls back to Resend automatically, so both can be set at once.
+If you later buy a real mailbox (Google Workspace, Microsoft 365, cPanel hosting), set these
+instead and the code will prefer them, falling back to Resend automatically if they fail:
+
+```
+SMTP_HOST=smtp.yourprovider.com
+SMTP_PORT=465
+SMTP_USER=info@integritysecuresolutions.com
+SMTP_PASS=the mailbox password
+```
+
+Port 465 is implicit TLS; 587 uses STARTTLS. Google Workspace and Microsoft 365 need an
+**App Password**, not the account login password. Leave `ENQUIRY_FROM_EMAIL` unset in that
+case — most mail servers reject a From address that is not the authenticated mailbox.
