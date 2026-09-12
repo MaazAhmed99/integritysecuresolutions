@@ -65,7 +65,8 @@ const organisationSchema = {
   "@type": "SecurityService",
   name: site.legalName,
   url: site.url,
-  telephone: site.phone,
+  // Structured data wants the international form, not the national display one.
+  telephone: site.phoneHref.replace("tel:", ""),
   email: site.email,
   description: site.description,
   address: {

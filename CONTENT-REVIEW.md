@@ -10,7 +10,7 @@ All values live in `src/lib/site.ts`.
 
 | Field | Current value | Status |
 |---|---|---|
-| `phone` / `phoneHref` | +447438082841 / `tel:+447438082841` | ✅ Real — client supplied |
+| `phone` / `phoneHref` | 07376426343 / `tel:+447376426343` | ✅ Real — client supplied |
 | `address` | 797-801 Stratford Road, Birmingham, West Midlands B11 4DA | ✅ Real — client supplied |
 | `serviceArea` | Birmingham & the West Midlands | ⚠️ Assumed from the postcode — confirm actual radius |
 | `email` | info@integritysecuresolutions.com | ✅ Real — forwards to the owner’s Gmail via Namecheap |

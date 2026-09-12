@@ -17,8 +17,8 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://integritysecuresolutions.com",
 
   /** Displayed in UK national format; the href stays in +44 international form. */
-  phone: "+447438082841",
-  phoneHref: "tel:+447438082841",
+  phone: "07376426343",
+  phoneHref: "tel:+447376426343",
 
   /* Shown in the header, footer and contact page. This address must actually
      receive mail — set up forwarding for it before launch. */
